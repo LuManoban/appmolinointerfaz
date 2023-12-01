@@ -8,12 +8,7 @@ from ultralytics import YOLO
 import math
 
 #show images
-def images(img, img2, img3):
-    img = img
-    img2 = img2
-    img3 = img3
-
-    if img is not None:
+def images(img):
         #Img detect
         img = np.array(img, dtype='uint8')
         img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
@@ -22,35 +17,6 @@ def images(img, img2, img3):
         img_ = ImageTk.PhotoImage(image=img)
         lblimg.configure(image=img_)
         lblimg.image = img_
-    else:
-        lblimg.configure(image=transparent_photo)
-        lblimg.image = transparent_photo
-
-    if img2 is not None:
-        # Img txt
-        img2 = np.array(img2, dtype='uint8')
-        img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
-        img2 = Image.fromarray(img2)
-
-        img_2 = ImageTk.PhotoImage(image=img2)
-        lblimg2.configure(image=img_2)
-        lblimg2.image = img_2
-    else:
-        lblimg2.configure(image=transparent_photo)
-        lblimg2.image = transparent_photo
-
-    if img3 is not None:
-        # Img txt3
-        img3 = np.array(img3, dtype='uint8')
-        img3 = cv2.cvtColor(img3, cv2.COLOR_BGR2RGB)
-        img3 = Image.fromarray(img3)
-
-        img_3 = ImageTk.PhotoImage(image=img3)
-        lblimg3.configure(image=img_3)
-        lblimg3.image = img_3
-    else:
-        lblimg3.configure(image=transparent_photo)
-        lblimg3.image = transparent_photo
 
 
 #Scanning Function
@@ -118,7 +84,7 @@ def Scanning():
                             cv2.putText(frame_show, text, (x1,y1 -5), cv2.FONT_HERSHEY_SIMPLEX,1, (255,0,0),2)
 
                             #Image
-                            images(img_general, None, None)
+                            images(img_general)
 
                     #else:
                         #detect_molinosag = False
@@ -141,7 +107,7 @@ def Scanning():
                             cv2.putText(frame_show, text, (x1, y1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 128, 0), 2)
 
                             #Image
-                            images(None,img_pernos,None)
+                            images(img_pernos)
 
                     if conf > CONFIDENCE_THRESHOLD:
                         if cls == 2:
@@ -160,13 +126,13 @@ def Scanning():
                             cv2.putText(frame_show, text, (x1, y1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
                             # Image
-                            images(None, None, img_liners)
+                            images(img_liners)
 
-            molinosag_img = img_general if detect_molinosag else None
-            pernos_img = img_pernos if detect_pernos else None
-            liners_img = img_liners if detect_liners else None
+           # molinosag_img = img_general if detect_molinosag else None
+            #pernos_img = img_pernos if detect_pernos else None
+            #liners_img = img_liners if detect_liners else None
 
-            images(molinosag_img, pernos_img, liners_img)
+            #images(molinosag_img)
 
             #Resize
             frame_show = imutils.resize(frame_show, width=640)
@@ -196,7 +162,7 @@ def ventana_principal():
     transparent_photo = ImageTk.PhotoImage(image=transparent_img)
 
     #background
-    imagenF = PhotoImage(file="setUp/Ventana.png")
+    imagenF = PhotoImage(file="setUp/pantprincipal.png")
     background = Label(image=imagenF)
     background.place(x=0, y=0, relwidth=1, relheight=1)
 
@@ -208,7 +174,7 @@ def ventana_principal():
 
     #Img
     img_liners = cv2.imread('setUp/liners.PNG')
-    img_general = cv2.imread('setUp/general.png')
+    img_general = cv2.imread('setUp/infgeneral.png')
     img_pernos = cv2.imread('setUp/pernos.png')
 
     # Label Video
@@ -234,5 +200,3 @@ def ventana_principal():
 
 if __name__ == '__main__':
     ventana_principal()
-
-
